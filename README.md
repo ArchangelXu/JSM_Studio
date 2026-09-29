@@ -6,17 +6,17 @@ JSM Studio is a graphical tool for JoyShockMapper on Windows. It integrates JoyS
 
 ![alt text](docs/1.png)
 
-This repository is a fork of [`evan1mclean/JSM_custom_curve`](https://github.com/evan1mclean/JSM_custom_curve), with JoyShockMapper maintained separately in [`hotuns/JoyShockMapper`](https://github.com/hotuns/JoyShockMapper). The JSM Studio repository pins that fork as the `JoyShockMapper` submodule on its `jsm-studio` branch. The fork's `main` branch tracks [`Electronicks/JoyShockMapper`](https://github.com/Electronicks/JoyShockMapper), while the integration branch preserves custom curves and the telemetry/controller interfaces required by this desktop application.
+This repository is a fork of [`hotuns/JSM_Studio`](https://github.com/hotuns/JSM_Studio). Its project history derives from [`evan1mclean/JSM_custom_curve`](https://github.com/evan1mclean/JSM_custom_curve). This fork uses [`ArchangelXu/JoyShockMapper`](https://github.com/ArchangelXu/JoyShockMapper) as its `JoyShockMapper` submodule on the `jsm-studio` branch, based on [`hotuns/JoyShockMapper`](https://github.com/hotuns/JoyShockMapper), so the Studio and backend fixes can be reproduced together.
 
 ## Download
 
 Download the latest installer from GitHub Releases:
 
-[Download Latest JSM Studio](https://github.com/hotuns/JSM_Studio/releases/latest)
+[Download Latest JSM Studio](https://github.com/ArchangelXu/JSM_Studio/releases/latest)
 
 You can also browse the Releases list for specific versions:
 
-[All Releases](https://github.com/hotuns/JSM_Studio/releases)
+[All Releases](https://github.com/ArchangelXu/JSM_Studio/releases)
 
 Windows users usually just need the `.exe` installer from the Release assets; if you need MSI, you can download the `.msi` file as well.
 
@@ -255,20 +255,22 @@ This repository uses GitHub Actions to automatically publish Windows installers.
 Push a version tag:
 
 ```powershell
-git tag -a v0.2.1 -m "JSM Studio v0.2.1"
-git push origin v0.2.1
+git tag -a v0.2.2-fixed.1 -m "JSM Studio v0.2.2-fixed.1"
+git push origin v0.2.2-fixed.1
 ```
 
 GitHub Actions will build and upload `.exe` / `.msi` files to the corresponding GitHub Release.
 
 ## Upstream & Related Projects
 
-- This repo: [`hotuns/JSM_Studio`](https://github.com/hotuns/JSM_Studio)
-- Forked upstream: [`evan1mclean/JSM_custom_curve`](https://github.com/evan1mclean/JSM_custom_curve)
-- JoyShockMapper: [`JibbSmart/JoyShockMapper`](https://github.com/JibbSmart/JoyShockMapper)
+- This fork: [`ArchangelXu/JSM_Studio`](https://github.com/ArchangelXu/JSM_Studio)
+- Direct upstream: [`hotuns/JSM_Studio`](https://github.com/hotuns/JSM_Studio)
+- Historical upstream: [`evan1mclean/JSM_custom_curve`](https://github.com/evan1mclean/JSM_custom_curve)
+- Patched JoyShockMapper used by this fork: [`ArchangelXu/JoyShockMapper`](https://github.com/ArchangelXu/JoyShockMapper)
+- JoyShockMapper integration upstream: [`hotuns/JoyShockMapper`](https://github.com/hotuns/JoyShockMapper)
 - HidHide: [`nefarius/HidHide`](https://github.com/nefarius/HidHide)
 - GyroWiki: [`gyrowiki.jibbsmart.com`](http://gyrowiki.jibbsmart.com)
 
 ## License
 
-JoyShockMapper uses the MIT License. See [LICENSE.md](LICENSE.md) for details.
+This project retains the original license and copyright notices from the upstream projects. See [LICENSE.md](LICENSE.md) for details.
