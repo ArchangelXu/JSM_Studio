@@ -20,6 +20,20 @@ You can also browse the Releases list for specific versions:
 
 Windows users usually just need the `.exe` installer from the Release assets; if you need MSI, you can download the `.msi` file as well.
 
+
+## Why This Fork
+
+This fork focuses on fixes and usability improvements that are especially relevant when using paired Joy-Cons and per-game profiles on Windows.
+
+- **Fixed paired Joy-Con virtual Xbox output**: when Joy-Con L + R are merged and `VIRTUAL_CONTROLLER = XBOX` is used, the left virtual stick no longer repeatedly snaps back to center while held.
+- **Added AutoLoad fallback profiles**: create `AutoLoad/__default__.txt` to automatically return to a default profile whenever the foreground application has no exact AutoLoad rule.
+- **Fixed profile rename persistence**: renamed profiles now keep their new filename and are no longer silently recreated as `Profile 1.txt`.
+- **Improved multi-controller mapping UI**: the mapping page can display all connected controller halves instead of only the first active device.
+- **Added right-stick axis inversion controls**: X and Y inversion can be configured independently from the GUI.
+- **Improved Windows development/build reliability**: avoids Vite watching Rust build artifacts and reduces `EBUSY` file-lock issues during development.
+
+The bundled JoyShockMapper runtime includes the corresponding backend fixes. See the latest release for ready-to-install Windows builds.
+
 ## Differences from the Forked Upstream
 
 Compared to [`evan1mclean/JSM_custom_curve`](https://github.com/evan1mclean/JSM_custom_curve), major improvements in this repository include:
