@@ -31,6 +31,25 @@ const hasFlagCommand = (text: string, key: string) => {
   return pattern.test(text)
 }
 
+type StickAxisState = {
+  xInverted: boolean
+  yInverted: boolean
+}
+
+const parseStickAxis = (raw?: string): StickAxisState => {
+  const tokens = raw?.trim().split(/\s+/).filter(Boolean) ?? []
+
+  const isInverted = (value?: string) => {
+    const normalized = value?.trim().toUpperCase()
+    return normalized === 'INVERTED' || normalized === '-1'
+  }
+
+  const xInverted = isInverted(tokens[0])
+  const yInverted = tokens.length >= 2 ? isInverted(tokens[1]) : xInverted
+
+  return { xInverted, yInverted }
+}
+
 export function useStickConfig({ configText, setConfigText }: StickArgs) {
   const handleStickDeadzoneChange = useCallback(
     (side: 'LEFT' | 'RIGHT', type: 'INNER' | 'OUTER', rawValue: string) => {
@@ -284,6 +303,33 @@ export function useStickConfig({ configText, setConfigText }: StickArgs) {
       },
     }
   }, [configText])
+  const rightStickAxis = useMemo(
+    () => parseStickAxis(getKeymapValue(configText, keyName.RIGHT_STICK_AXIS)),
+    [configText]
+  )
+
+  const handleRightStickAxisChange = useCallback(
+    (axis: 'X' | 'Y', inverted: boolean) => {
+      setConfigText(prev => {
+        const current = parseStickAxis(getKeymapValue(prev, keyName.RIGHT_STICK_AXIS))
+        const next = {
+          ...current,
+          [axis === 'X' ? 'xInverted' : 'yInverted']: inverted,
+        }
+
+        if (!next.xInverted && !next.yInverted) {
+          return removeKeymapEntry(prev, keyName.RIGHT_STICK_AXIS)
+        }
+
+        return updateKeymapEntry(prev, keyName.RIGHT_STICK_AXIS, [
+          next.xInverted ? 'INVERTED' : 'STANDARD',
+          next.yInverted ? 'INVERTED' : 'STANDARD',
+        ])
+      })
+    },
+    [setConfigText]
+  )
+
   const stickModeShiftAssignments = useMemo(() => getStickModeShiftAssignmentMap(configText), [configText])
   const stickAimSettings = useMemo(() => {
     const rawSens = getKeymapValue(configText, keyName.STICK_SENS)
@@ -408,6 +454,8 @@ export function useStickConfig({ configText, setConfigText }: StickArgs) {
     leftStickDeadzone,
     rightStickDeadzone,
     stickModes,
+    rightStickAxis,
+    handleRightStickAxisChange,
     stickModeShiftAssignments,
     stickAimSettings,
     adaptiveTriggerValue,

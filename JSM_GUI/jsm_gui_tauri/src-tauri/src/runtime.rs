@@ -78,10 +78,19 @@ pub fn ensure_required_files(app: &AppHandle) -> Result<(), String> {
     migrate_bundled_runtime_data(app, &backend)?;
     ensure_runtime_support_files(app, &backend)?;
 
-    ensure_file(
-        &absolute_profile_path(app, DEFAULT_PROFILE_RELATIVE)?,
-        &profile_template_text(),
-    )?;
+    let has_library_profile = fs::read_dir(profile_library_dir(app)?)
+        .map_err(|error| format!("Failed to read profile library: {error}"))?
+        .filter_map(Result::ok)
+        .any(|entry| {
+            entry.path().extension().and_then(|ext| ext.to_str()) == Some("txt")
+        });
+
+    if !has_library_profile {
+        ensure_file(
+            &absolute_profile_path(app, DEFAULT_PROFILE_RELATIVE)?,
+            &profile_template_text(),
+        )?;
+    }
     ensure_mapping_disabled_file(app)?;
 
     let state = ensure_runtime_mapping_state(app)?;

@@ -89,3 +89,34 @@
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
+
+.axisInversionSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.axisInversionTitle {
+  color: var(--text-strong);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.axisInversionOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.stickModeCard .axisInversionOption {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.axisInversionOption input[type='checkbox'] {
+  margin: 0;
+  accent-color: var(--accent);
+}

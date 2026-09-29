@@ -133,6 +133,8 @@ export function useKeymapConfig() {
     leftStickDeadzone: stickConfig.leftStickDeadzone,
     rightStickDeadzone: stickConfig.rightStickDeadzone,
     stickModes: stickConfig.stickModes,
+    rightStickAxis: stickConfig.rightStickAxis,
+    handleRightStickAxisChange: stickConfig.handleRightStickAxisChange,
     stickModeShiftAssignments: stickConfig.stickModeShiftAssignments,
     stickAimSettings: stickConfig.stickAimSettings,
     adaptiveTriggerValue: stickConfig.adaptiveTriggerValue,

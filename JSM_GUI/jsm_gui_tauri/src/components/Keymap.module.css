@@ -252,6 +252,22 @@
   font-weight: 700;
 }
 
+.mappingControllerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.65rem;
+  align-items: start;
+}
+
+.mappingControllerItem {
+  min-width: 0;
+  border: 1px solid var(--border-1);
+  border-radius: 8px;
+  background: var(--bg-input);
+  padding: 0.45rem;
+}
+
 .mappingButtonGroups {
   display: flex;
   flex-direction: column;

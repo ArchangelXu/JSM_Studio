@@ -357,6 +357,8 @@ function App() {
     leftStickDeadzone,
     rightStickDeadzone,
     stickModes,
+    rightStickAxis,
+    handleRightStickAxisChange,
     stickModeShiftAssignments,
     stickAimSettings,
     adaptiveTriggerValue,
@@ -939,6 +941,8 @@ function App() {
               right: rightStickDeadzone,
             }}
             stickModeSettings={stickModes}
+            rightStickAxis={rightStickAxis}
+            onRightStickAxisChange={handleRightStickAxisChange}
             onStickDeadzoneChange={handleStickDeadzoneChange}
             onStickModeChange={handleStickModeChange}
             onRingModeChange={handleRingModeChange}

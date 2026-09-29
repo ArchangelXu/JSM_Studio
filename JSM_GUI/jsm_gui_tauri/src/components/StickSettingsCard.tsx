@@ -11,6 +11,11 @@ type StickSettingsCardProps = {
   defaultOuter: string
   modeValue: string
   ringValue: string
+  axisInversion?: {
+    xInverted: boolean
+    yInverted: boolean
+  }
+  onAxisInversionChange?: (axis: 'X' | 'Y', inverted: boolean) => void
   onModeChange: (value: string) => void
   onRingChange: (value: string) => void
   disabled?: boolean
@@ -83,6 +88,8 @@ export function StickSettingsCard({
   defaultOuter,
   modeValue,
   ringValue,
+  axisInversion,
+  onAxisInversionChange,
   onModeChange,
   onRingChange,
   disabled = false,
@@ -122,6 +129,31 @@ export function StickSettingsCard({
           <option value="OUTER">{t('stickModes.outer')}</option>
         </select>
       </label>
+      {axisInversion && onAxisInversionChange && (
+        <div className={styles.axisInversionSection}>
+          <span className={styles.axisInversionTitle}>{t('stickModes.axisInversion')}</span>
+          <div className={styles.axisInversionOptions}>
+            <label className={styles.axisInversionOption}>
+              <input
+                type="checkbox"
+                checked={axisInversion.xInverted}
+                onChange={(event) => onAxisInversionChange('X', event.target.checked)}
+                disabled={disabled}
+              />
+              <span>{t('stickModes.invertX')}</span>
+            </label>
+            <label className={styles.axisInversionOption}>
+              <input
+                type="checkbox"
+                checked={axisInversion.yInverted}
+                onChange={(event) => onAxisInversionChange('Y', event.target.checked)}
+                disabled={disabled}
+              />
+              <span>{t('stickModes.invertY')}</span>
+            </label>
+          </div>
+        </div>
+      )}
       <label>
         {innerValue ? t('stickModes.innerDeadzone') : `${t('stickModes.innerDeadzone')} (${t('common.defaultValue', { value: defaultInner })})`}
         <input

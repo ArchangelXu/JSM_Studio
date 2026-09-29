@@ -122,6 +122,11 @@ type KeymapControlsProps = {
     left: { mode: string; ring: string }
     right: { mode: string; ring: string }
   }
+  rightStickAxis?: {
+    xInverted: boolean
+    yInverted: boolean
+  }
+  onRightStickAxisChange?: (axis: 'X' | 'Y', inverted: boolean) => void
   onStickModeChange?: (side: 'LEFT' | 'RIGHT', mode: string) => void
   onRingModeChange?: (side: 'LEFT' | 'RIGHT', mode: string) => void
   stickAimSettings?: {
@@ -453,6 +458,8 @@ export function KeymapControls({
   stickDeadzoneSettings,
   onStickDeadzoneChange,
   stickModeSettings,
+  rightStickAxis,
+  onRightStickAxisChange,
   onStickModeChange,
   onRingModeChange,
   stickModeShiftAssignments,
@@ -628,7 +635,7 @@ export function KeymapControls({
     : RIGHT_STICK_COMMANDS.has(selectedVisualCommandUpper)
       ? 'RIGHT'
       : null
-  const visualDevice = devices?.find(device => device.status) ?? devices?.[0] ?? VIRTUAL_MAPPING_DEVICE
+  const visualDevices = devices?.length ? devices : [VIRTUAL_MAPPING_DEVICE]
 
   useEffect(() => {
     if (view !== 'full') return
@@ -983,12 +990,21 @@ export function KeymapControls({
                 </div>
                 {!devices?.length && <span className={keymapStyles.mappingModeBadge}>{t('keymap.virtualControllerMode')}</span>}
               </div>
-              <ControllerStatusSvg
-                device={visualDevice}
-                boundCommands={boundCommandSet}
-                selectedCommand={selectedVisualCommandUpper}
-                onSelectCommand={command => onSelectedMappingCommandChange?.(command.toUpperCase())}
-              />
+              <div className={keymapStyles.mappingControllerGrid}>
+                {visualDevices.map((device, index) => (
+                  <div
+                    key={`${device.handle}-${device.type}-${index}`}
+                    className={keymapStyles.mappingControllerItem}
+                  >
+                    <ControllerStatusSvg
+                      device={device}
+                      boundCommands={boundCommandSet}
+                      selectedCommand={selectedVisualCommandUpper}
+                      onSelectCommand={command => onSelectedMappingCommandChange?.(command.toUpperCase())}
+                    />
+                  </div>
+                ))}
+              </div>
               <div className={keymapStyles.mappingButtonGroups} data-capture-ignore="true">
                 {visualMappingGroups.map(group => (
                   <section key={group.titleKey} className={keymapStyles.mappingButtonGroup}>
@@ -1058,6 +1074,10 @@ export function KeymapControls({
                     defaultOuter={deadzoneDefaults.outer}
                     modeValue={selectedStickSide === 'LEFT' ? leftStickModes.mode : rightStickModes.mode}
                     ringValue={selectedStickSide === 'LEFT' ? leftStickModes.ring : rightStickModes.ring}
+                    axisInversion={selectedStickSide === 'RIGHT' ? rightStickAxis : undefined}
+                    onAxisInversionChange={
+                      selectedStickSide === 'RIGHT' ? onRightStickAxisChange : undefined
+                    }
                     onModeChange={(value) => onStickModeChange(selectedStickSide, value)}
                     onRingChange={(value) => onRingModeChange(selectedStickSide, value)}
                     onInnerChange={(value) => onStickDeadzoneChange(selectedStickSide, 'INNER', value)}

@@ -256,6 +256,10 @@ export function useProfileLibrary({
         }
       } catch (err) {
         console.error('Failed to rename profile', err)
+        setEditedLibraryNames(prev => ({
+          ...prev,
+          [originalName]: originalName,
+        }))
         const message = t('messages.renameProfileFailed')
         setStatusMessage(message)
         showToast(message, 'error')
