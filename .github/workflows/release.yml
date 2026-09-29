@@ -34,19 +34,17 @@ jobs:
         working-directory: JSM_GUI/jsm_gui_tauri
         run: npm ci
 
-      - name: Build, sign, and publish Tauri release
+      - name: Build and publish Tauri release
         uses: tauri-apps/tauri-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
-          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
           projectPath: JSM_GUI/jsm_gui_tauri
-          tagName: v__VERSION__
-          releaseName: JSM Studio v__VERSION__
-          releaseBody: Download the Windows installer below. The application can check this release for future updates.
+          tagName: ${{ github.ref_name }}
+          releaseName: JSM Studio ${{ github.ref_name }}
+          releaseBody: Download the Windows installer below.
           releaseDraft: false
           prerelease: false
-          uploadUpdaterJson: true
-          uploadUpdaterSignatures: true
+          uploadUpdaterJson: false
+          uploadUpdaterSignatures: false
           uploadWorkflowArtifacts: true
