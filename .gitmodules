@@ -1,4 +1,4 @@
 [submodule "JoyShockMapper"]
 	path = JoyShockMapper
-	url = git@github.com:hotuns/JoyShockMapper.git
+	url = https://github.com/ArchangelXu/JoyShockMapper.git
 	branch = jsm-studio
